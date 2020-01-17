@@ -13,7 +13,10 @@
 ## Пример конфигурации docker-compose.yml
 
 Смотри файл docker-compose.example.yml    
-Настройка параметра SCHEDULE - секунда минута час день месяц год    
+Настройка параметра SCHEDULE - `http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules`   
+Например бэкап каждую пять минут - `0 */5 * * * *`   
+Бэкап в полночь (по GMT +09:00) - `15 0 0 * *`   
+ps: Время в контейнере идет по гриндвичу
 
 ## Бэкап по требованию
 
