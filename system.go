@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -16,6 +17,7 @@ import (
 // SendError Отправка ошибки на почту
 func SendError(logError error) {
 	stack := debug.Stack()
+	fmt.Printf(logError.Error())
 
 	from := mail.Address{Name: os.Getenv("PROJECT"), Address: os.Getenv("MAIL_SMPT_USER")}
 	to := mail.Address{Name: "mail", Address: os.Getenv("MAIL_TO")}
@@ -145,4 +147,26 @@ func UploadFile(url string, filename string) ([]byte, int, error) {
 
 	respBody, err := ioutil.ReadAll(resp.Body)
 	return respBody, resp.StatusCode, err
+}
+
+// DownloadFile Загрузка файла по URL
+func DownloadFile(filepath string, url string) error {
+
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+	return err
 }

@@ -8,5 +8,6 @@ RUN sh util_install.sh && rm util_install.sh
 ADD app app
 ADD util_dump.sh util_dump.sh
 ADD util_run.sh util_run.sh
+ADD util_restore.sh util_restore.sh
 
 CMD ["sh", "util_run.sh"]

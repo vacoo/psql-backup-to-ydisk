@@ -24,7 +24,6 @@ services:
             - GUNICORN_THREADS=100
         volumes:
             - ./pgadmin4:/var/lib/pgadmin
-            - ./backups:/var/lib/pgadmin/storage
         logging:
             driver: none
 
@@ -48,4 +47,4 @@ services:
             - MAIL_SMPT_PASS=123
             - MAIL_TO=login@yandex.ru
         volumes:
-            - ./backups/root_mail.ru:/home/backups
+            - ./backups:/home/backups
