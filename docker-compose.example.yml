@@ -1,0 +1,51 @@
+version: "3.4"
+
+services:
+    postgresql:
+        image: postgres:12.1
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=123
+            - POSTGRES_DB=database
+        volumes:
+            - ./postgresql:/var/lib/postgresql/data
+        logging:
+            driver: none
+
+    pgadmin4:
+        image: dpage/pgadmin4:4.16
+        ports:
+            - 5050:80
+        depends_on:
+            - postgresql
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=root@mail.ru
+            - PGADMIN_DEFAULT_PASSWORD=123
+            - GUNICORN_THREADS=100
+        volumes:
+            - ./pgadmin4:/var/lib/pgadmin
+            - ./backups:/var/lib/pgadmin/storage
+        logging:
+            driver: none
+
+    postgres-backup:
+        build: .
+        depends_on:
+            - postgresql
+        environment:
+            - PROJECT=MyApp
+            - SCHEDULE=*/30 * * * *
+            - PSQL_HOST=postgresql
+            - PSQL_PORT=5432
+            - PSQL_USER=root
+            - PSQL_PASS=123
+            - PSQL_DB=database
+            - YANDEX_DISK_ACCESS_TOKEN=token
+            - YANDEX_DISK_APP_FOLDER=my-app-backups
+            - MAIL_SMPT_HOST=smtp.yandex.ru
+            - MAIL_SMPT_PORT=465
+            - MAIL_SMPT_USER=login@yandex.ru
+            - MAIL_SMPT_PASS=123
+            - MAIL_TO=login@yandex.ru
+        volumes:
+            - ./backups/root_mail.ru:/home/backups
