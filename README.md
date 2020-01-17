@@ -6,7 +6,7 @@
 
 ## Получение токена доступа
 
-1. Региструем свое приложение в yandex `[https://oauth.yandex.ru/client/new](https://oauth.yandex.ru/client/new)`. Выбираем Яндекс.Диск REST API и права: Доступ к информации о диске, Доступ к папке приложения на диске. Сохраняем полученные данные.
+1. Региструем свое приложение в yandex `[https://oauth.yandex.ru/client/new](https://oauth.yandex.ru/client/new).`. Выбираем Яндекс.Диск REST API и права: Доступ к информации о диске, Доступ к папке приложения на диске. Сохраняем полученные данные.
 2. Заходим по этой ссылке `https://oauth.yandex.ru/authorize?response_type=token&client_id=<client_id>` и получаем токен доступа. Токен действует 1 год.
 3. Полученный YANDEX_DISK_ACCESS_TOKEN & YANDEX_DISK_APP_FOLDER записываем в конфигурацию.
 
