@@ -10,14 +10,17 @@ import (
 	"net/mail"
 	"net/smtp"
 	"os"
+	"runtime/debug"
 )
 
 // SendError Отправка ошибки на почту
 func SendError(logError error) {
+	stack := debug.Stack()
+
 	from := mail.Address{Name: os.Getenv("PROJECT"), Address: os.Getenv("MAIL_SMPT_USER")}
 	to := mail.Address{Name: "mail", Address: os.Getenv("MAIL_TO")}
 	subj := "Ошибка резервного копирования базы данных "
-	body := "ERR_MSG: " + logError.Error()
+	body := "ERR_MSG: " + logError.Error() + "\n" + fmt.Sprintf("STACK:\n %s\n", stack)
 
 	headers := make(map[string]string)
 	headers["From"] = from.String()

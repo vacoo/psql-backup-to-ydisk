@@ -18,7 +18,7 @@ docker-compose.example.yml
 
 ## Восстановление из бэкапа
 
-1. `docker exec -it <container_name> sh /home/restore 2020-01/backup_2020-01-17_15-10.gz`
+1. `docker exec -it <container_name> sh /home/app restore 2020-01/backup_2020-01-17_15-10.gz`
 2. Бэкап будет сохранен в /home/backups
 
 ## Использование

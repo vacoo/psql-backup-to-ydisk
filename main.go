@@ -12,6 +12,30 @@ import (
 )
 
 func main() {
+	mode := os.Args[1]
+
+	if mode == "" {
+		fmt.Println("Пожалуйста выберите режим: backup | restore")
+		os.Exit(1)
+	}
+
+	if mode == "backup" {
+		Backup()
+	}
+	if mode == "restore" {
+		Restore()
+	}
+
+	os.Exit(0)
+}
+
+// Restore Восстановление
+func Restore() {
+
+}
+
+// Backup Бэкап
+func Backup() {
 	dumpName := os.Getenv("PSQL_DB") + "-" + time.Now().Format("2006-01-02_15-04") + ".gz"
 
 	// Делаем бэкап в папку backups
@@ -76,6 +100,13 @@ func main() {
 	}
 
 	fmt.Println("Файл загружен ", folderPath+"/"+fileName)
+
+	// Удаляем дамп из локального диска
+	err = os.Remove(file)
+	if err != nil {
+		SendError(err)
+		os.Exit(0)
+	}
 
 	os.Exit(0)
 }
